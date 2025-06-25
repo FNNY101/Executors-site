@@ -1,3 +1,1216 @@
-<html>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploitsHub | Advanced Exploit Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f5f5f5;
+            --gray: #2a2a2a;
+            --success: #00c853;
+            --warning: #ffab00;
+            --danger: #ff1744;
+            --card-bg: rgba(26, 26, 26, 0.8);
+            --sidebar-width: 300px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(106, 17, 203, 0.3);
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-1000px) translateX(1000px) rotate(720deg); opacity: 0; }
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 25px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            width: 400px;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .search-bar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        /* Sidebar Filters */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            height: fit-content;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-group h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-group h3 i {
+            font-size: 1.1rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .filter-option input {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+        
+        .filter-option label {
+            font-size: 1rem;
+            flex: 1;
+        }
+        
+        .power-levels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .power-btn {
+            flex: 1;
+            min-width: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .power-btn:hover {
+            background: rgba(106, 17, 203, 0.3);
+        }
+        
+        .power-btn.active {
+            background: var(--primary);
+            box-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+        }
+        
+        .filter-actions {
+            margin-top: 20px;
+        }
+        
+        .filter-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-header {
+            padding: 20px;
+            background: rgba(37, 117, 252, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .card-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .category-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--primary);
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .status.working {
+            background: rgba(0, 200, 83, 0.2);
+            color: var(--success);
+        }
+        
+        .status.detected {
+            background: rgba(255, 23, 68, 0.2);
+            color: var(--danger);
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            min-width: 100px;
+            color: #aaa;
+        }
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        .platforms {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .platform {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .card-footer {
+            display: flex;
+            gap: 10px;
+            padding: 0 20px 20px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-site {
+            background: var(--primary);
+        }
+        
+        .btn-discord {
+            background: #5865F2;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-title {
+            margin: 30px 0 20px;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+        
+        .alert {
+            background: rgba(255, 171, 0, 0.2);
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        .guide {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .guide h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .guide p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .guide-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .guide-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .recommended-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--success);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(5deg);
+        }
+        
+        .not-recommended-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--danger);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(5deg);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+            color: #aaa;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        .filter-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .power-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #ddd;
+        }
+        
+        .power-indicator {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .power-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 70%;
+            border-radius: 10px;
+        }
+        
+        .power-value {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        .results-count {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+            
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <!-- Sidebar Filters -->
+        <div class="sidebar">
+            <div class="filter-section">
+                <h3><i class="fas fa-bolt"></i> Power Level</h3>
+                <div class="power-indicator">
+                    <div class="power-fill"></div>
+                </div>
+                <div class="power-value">LEVEL: ALL</div>
+                <div class="power-levels">
+                    <button class="power-btn active" data-power="all">ALL</button>
+                    <button class="power-btn" data-power="1-3">1-3</button>
+                    <button class="power-btn" data-power="3-6">3-6</button>
+                    <button class="power-btn" data-power="8+">8+</button>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3><i class="fas fa-mobile-alt"></i> Platform</h3>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="windows" checked>
+                        <label for="windows">Windows</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="macos" checked>
+                        <label for="macos">macOS</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="android" checked>
+                        <label for="android">Android</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="ios" checked>
+                        <label for="ios">iOS</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3><i class="fas fa-tag"></i> Price</h3>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="free" checked>
+                        <label for="free">Free</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="paid" checked>
+                        <label for="paid">Paid</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3><i class="fas fa-filter"></i> Show Only</h3>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="verified">
+                        <label for="verified">Verified</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="premium">
+                        <label for="premium">Premium</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="external">
+                        <label for="external">External</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="executor" checked>
+                        <label for="executor">Executor</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="keyless">
+                        <label for="keyless">Keyless</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="keysystem">
+                        <label for="keysystem">Key System</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3><i class="fas fa-sort"></i> Sort by</h3>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="radio" id="popular" name="sort" checked>
+                        <label for="popular">Most Popular</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="radio" id="recent" name="sort">
+                        <label for="recent">Recently Added</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="radio" id="alpha" name="sort">
+                        <label for="alpha">Alphabetical</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="filter-btn" id="resetFilters">Reset Filters</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <h1>ExploitsHub</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search exploits, tools, signers...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+            </header>
+            
+            <div class="guide">
+                <h2>Installing exploits on Android & PC</h2>
+                <p>Get started with our comprehensive guide to installing and using exploits safely and effectively. Learn how to configure your environment, install necessary dependencies, and use various exploit tools without compromising your security.</p>
+                <a href="#" class="guide-btn">Read Installation Guide</a>
+            </div>
+            
+            <h2 class="section-title">Exploits & Tools</h2>
+            <div class="results-count">Showing <span id="resultsCount">14</span> items</div>
+            
+            <div class="content" id="content">
+                <!-- Codex -->
+                <div class="card" data-platform="android ios" data-price="free" data-type="executor" data-power="7" data-category="mobile">
+                    <div class="category-tag">Mobile</div>
+                    <div class="card-header">
+                        <h2><i class="fab fa-android"></i> Codex</h2>
+                        <span class="status working">Working (Undetected)</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">Android</span>
+                                        <span class="platform">iOS</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Safety:</span>
+                                <span class="info-value">Safe</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Price:</span>
+                                <span class="info-value">Free</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 7</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">Android, iOS, safe, free executor</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://codex.lol" class="btn btn-site" target="_blank">
+                            <i class="fas fa-globe"></i> Website
+                        </a>
+                        <a href="https://discord.gg/Vf4NtUYS" class="btn btn-discord" target="_blank">
+                            <i class="fab fa-discord"></i> Discord
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Matcha -->
+                <div class="card" data-platform="windows" data-price="paid" data-type="external" data-power="9" data-category="external">
+                    <div class="category-tag">External</div>
+                    <div class="recommended-badge">Recommended</div>
+                    <div class="card-header">
+                        <h2><i class="fab fa-windows"></i> Matcha</h2>
+                        <span class="status working">Working (Undetected)</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">Windows</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Safety:</span>
+                                <span class="info-value">Safe</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Price:</span>
+                                <span class="info-value">Paid</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 9</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">Best external with client-based execution</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-site disabled" style="background: #777">
+                            <i class="fas fa-globe"></i> No Website
+                        </a>
+                        <a href="https://discord.gg/matchalol" class="btn btn-discord" target="_blank">
+                            <i class="fab fa-discord"></i> Discord
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- AWP -->
+                <div class="card" data-platform="windows" data-price="paid" data-type="executor" data-power="8" data-category="pc">
+                    <div class="category-tag">PC Executor</div>
+                    <div class="card-header">
+                        <h2><i class="fab fa-windows"></i> AWP (Krampus 2.0)</h2>
+                        <span class="status working">Working (Undetected)</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">Windows</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Safety:</span>
+                                <span class="info-value">Safe</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Price:</span>
+                                <span class="info-value">Paid</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 8</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">Considered the best executor currently available</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://buyawp.gg" class="btn btn-site" target="_blank">
+                            <i class="fas fa-globe"></i> Website
+                        </a>
+                        <a href="https://discord.gg/awpgg" class="btn btn-discord" target="_blank">
+                            <i class="fab fa-discord"></i> Discord
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Fluxus -->
+                <div class="card" data-platform="android" data-price="free" data-type="executor" data-power="5" data-category="mobile">
+                    <div class="category-tag">Mobile</div>
+                    <div class="card-header">
+                        <h2><i class="fab fa-android"></i> Fluxus</h2>
+                        <span class="status working">Working (Undetected)</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">Android</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Safety:</span>
+                                <span class="info-value">Safe</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Price:</span>
+                                <span class="info-value">Free</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 5</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">Android executor with regular updates</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-site disabled" style="background: #777">
+                            <i class="fas fa-globe"></i> No Website
+                        </a>
+                        <a href="https://discord.gg/getatlas" class="btn btn-discord" target="_blank">
+                            <i class="fab fa-discord"></i> Discord
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Appleware -->
+                <div class="card" data-platform="ios" data-price="free" data-type="executor" data-power="6" data-category="mobile">
+                    <div class="category-tag">Mobile</div>
+                    <div class="card-header">
+                        <h2><i class="fab fa-apple"></i> Appleware</h2>
+                        <span class="status working">Working (Undetected)</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">iOS</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Safety:</span>
+                                <span class="info-value">Safe</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Price:</span>
+                                <span class="info-value">Free</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 6</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">iOS executor with regular updates</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://appleware.dev/download" class="btn btn-site" target="_blank">
+                            <i class="fas fa-globe"></i> Website
+                        </a>
+                        <a href="https://discord.gg/apple-ware-working-1240702465091960903" class="btn btn-discord" target="_blank">
+                            <i class="fab fa-discord"></i> Discord
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mumuplayer -->
+                <div class="card" data-platform="windows" data-price="free" data-type="tool" data-power="3" data-category="emulator">
+                    <div class="category-tag">Emulator</div>
+                    <div class="card-header">
+                        <h2><i class="fas fa-play-circle"></i> Mumuplayer</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">Windows</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Performance:</span>
+                                <span class="info-value">Best Performance</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Controls:</span>
+                                <span class="info-value">No PC Controls</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 3</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">Recommended for high performance</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.mumuplayer.com/" class="btn btn-site" target="_blank">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Aimmy -->
+                <div class="card" data-platform="windows" data-price="free" data-type="ai" data-power="4" data-category="ai">
+                    <div class="category-tag">AI Cheat</div>
+                    <div class="card-header">
+                        <h2><i class="fas fa-robot"></i> Aimmy</h2>
+                        <span class="status working">Always Working</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">Windows</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Safety:</span>
+                                <span class="info-value">Safe</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Price:</span>
+                                <span class="info-value">Free</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 4</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">Open source AI aiming assistant</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://aimmy.dev/" class="btn btn-site" target="_blank">
+                            <i class="fas fa-globe"></i> Website
+                        </a>
+                        <a href="https://discord.gg/aimmy" class="btn btn-discord" target="_blank">
+                            <i class="fab fa-discord"></i> Discord
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- eSign -->
+                <div class="card" data-platform="ios" data-price="free" data-type="signer" data-power="2" data-category="signer">
+                    <div class="category-tag">iOS Signer</div>
+                    <div class="card-header">
+                        <h2><i class="fab fa-apple"></i> eSign</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Platforms:</span>
+                                <span class="info-value">
+                                    <div class="platforms">
+                                        <span class="platform">iOS</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Type:</span>
+                                <span class="info-value">Signer</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Price:</span>
+                                <span class="info-value">Free</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Power:</span>
+                                <span class="info-value">Level 2</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value">iOS signer with installers and certificates</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://khoindvn.io.vn/" class="btn btn-site" target="_blank">
+                            <i class="fas fa-globe"></i> Website
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <footer>
+                <p>ExploitsHub &copy; 2025 | This website is for educational purposes only. Use exploits at your own risk.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem; color: #777;">Always practice safe computing and avoid using exploits in games that prohibit them.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation duration
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Filter functionality
+        function setupFilters() {
+            const resetBtn = document.getElementById('resetFilters');
+            const powerBtns = document.querySelectorAll('.power-btn');
+            const filterInputs = document.querySelectorAll('.filter-options input');
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            // Power level buttons
+            powerBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    powerBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterCards();
+                });
+            });
+            
+            // Filter inputs
+            filterInputs.forEach(input => {
+                input.addEventListener('change', filterCards);
+            });
+            
+            // Search input
+            searchInput.addEventListener('keyup', filterCards);
+            searchBtn.addEventListener('click', filterCards);
+            
+            // Reset filters
+            resetBtn.addEventListener('click', () => {
+                // Reset all checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = checkbox.id === 'executor' || 
+                                      checkbox.id === 'windows' || 
+                                      checkbox.id === 'macos' || 
+                                      checkbox.id === 'android' || 
+                                      checkbox.id === 'ios' || 
+                                      checkbox.id === 'free' || 
+                                      checkbox.id === 'paid';
+                });
+                
+                // Reset radio buttons
+                document.querySelector('input[type="radio"][name="sort"]').checked = true;
+                
+                // Reset power buttons
+                powerBtns.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.power-btn[data-power="all"]').classList.add('active');
+                
+                // Clear search
+                searchInput.value = '';
+                
+                // Apply reset
+                filterCards();
+            });
+        }
+        
+        // Filter cards based on selected options
+        function filterCards() {
+            const cards = document.querySelectorAll('.card');
+            let visibleCount = 0;
+            
+            // Get selected power level
+            const powerLevel = document.querySelector('.power-btn.active').getAttribute('data-power');
+            
+            // Get selected platforms
+            const platforms = [];
+            if (document.getElementById('windows').checked) platforms.push('windows');
+            if (document.getElementById('macos').checked) platforms.push('macos');
+            if (document.getElementById('android').checked) platforms.push('android');
+            if (document.getElementById('ios').checked) platforms.push('ios');
+            
+            // Get selected price
+            const prices = [];
+            if (document.getElementById('free').checked) prices.push('free');
+            if (document.getElementById('paid').checked) prices.push('paid');
+            
+            // Get selected show only options
+            const showOnly = [];
+            if (document.getElementById('verified').checked) showOnly.push('verified');
+            if (document.getElementById('premium').checked) showOnly.push('premium');
+            if (document.getElementById('external').checked) showOnly.push('external');
+            if (document.getElementById('executor').checked) showOnly.push('executor');
+            if (document.getElementById('keyless').checked) showOnly.push('keyless');
+            if (document.getElementById('keysystem').checked) showOnly.push('keysystem');
+            
+            // Get search term
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            cards.forEach(card => {
+                const cardPower = parseInt(card.getAttribute('data-power'));
+                const cardPlatform = card.getAttribute('data-platform');
+                const cardPrice = card.getAttribute('data-price');
+                const cardType = card.getAttribute('data-type');
+                const cardTitle = card.querySelector('h2').textContent.toLowerCase();
+                const cardDesc = card.querySelector('.info-value:last-child').textContent.toLowerCase();
+                
+                // Power level filter
+                let powerMatch = false;
+                if (powerLevel === 'all') powerMatch = true;
+                else if (powerLevel === '1-3' && cardPower >= 1 && cardPower <= 3) powerMatch = true;
+                else if (powerLevel === '3-6' && cardPower >= 3 && cardPower <= 6) powerMatch = true;
+                else if (powerLevel === '8+' && cardPower >= 8) powerMatch = true;
+                
+                // Platform filter
+                const platformMatch = platforms.some(platform => cardPlatform.includes(platform));
+                
+                // Price filter
+                const priceMatch = prices.includes(cardPrice);
+                
+                // Type filter
+                const typeMatch = showOnly.length === 0 || showOnly.includes(cardType);
+                
+                // Search filter
+                const searchMatch = searchTerm === '' || 
+                                    cardTitle.includes(searchTerm) || 
+                                    cardDesc.includes(searchTerm);
+                
+                // Show card if all conditions are met
+                if (powerMatch && platformMatch && priceMatch && typeMatch && searchMatch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update results count
+            document.getElementById('resultsCount').textContent = visibleCount;
+        }
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            setupFilters();
+            filterCards(); // Initial filter
+        });
+    </script>
+</body>
 </html>
